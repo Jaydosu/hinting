@@ -60,7 +60,7 @@ def subpixel_aa(image_path, downsample_factor=20):
 
         # upscale the image 3x in width for subpixel rendering to the nearest number of downsample factor
         nearest_width = 3* original_img_size[0] + (downsample_factor - (3*original_img_size[0]) % downsample_factor)
-        nearest_height = 3* original_img_size[1] + (downsample_factor - (3*original_img_size[1]) % downsample_factor)
+        nearest_height = original_img_size[1] + (downsample_factor - (original_img_size[1]) % downsample_factor)
         subpixel_img = img.resize((nearest_width, nearest_height), Image.Resampling.NEAREST)
         print(subpixel_img.size)
 
@@ -101,7 +101,6 @@ def subpixel_aa(image_path, downsample_factor=20):
                     draw.rectangle([column, row, column + downsample_factor, row + downsample_factor], fill=(255, 255, 255))
 
         # turn the image in to greyscale
-        #new_img = new_img.convert("L")
 
         # stack the original image resized to the new image size on top of the new image
         newer_img = Image.new("RGB", (new_img.size[0], new_img.size[1] * 2))
@@ -118,9 +117,9 @@ def subpixel_aa(image_path, downsample_factor=20):
 
 
 if __name__ == "__main__":
-    antialiased_img = antialias(os.getcwd() + "\\hinting\\working\\rsgt.jpg", 10)
-    antialiased_img.save(os.getcwd() + "\\hinting\\working\\output\\antialiased.jpg")
+    antialiased_img = antialias(os.getcwd() + "\\working\\rsgt.jpg", 10)
+    antialiased_img.save(os.getcwd() + "\\working\\output\\antialiased.jpg")
 
-    subpixel_img = subpixel_aa(os.getcwd() + "\\hinting\\working\\output\\antialiased.jpg")
-    #subpixel_img = subpixel_aa(os.getcwd() + "\\hinting\\working\\rsgt.jpg", 20)
-    subpixel_img.save(os.getcwd() + "\\hinting\\working\\output\\subpixel.jpg")
+    subpixel_img = subpixel_aa(os.getcwd() + "\\working\\output\\antialiased.jpg")
+    #subpixel_img = subpixel_aa(os.getcwd() + "\\working\\rsgt.jpg", 20)
+    subpixel_img.save(os.getcwd() + "\\working\\output\\subpixel.jpg")
